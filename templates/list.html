@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="alert alert-dark" role="alert">
+  Pic Tweet
+  <div align="right"><a href="{% url 'tweetapp:create' %}" class="badge badge-primary">新規投稿</a></div>
+  <div align="right"><a href="#" class="badge badge-primary">User</a></div>
+  <div align="right"><a href="{% url 'logout' %}" class="badge badge-primary">ログアウト</a></div>
+</div>
+{% endblock header %}
+
+{% block content %}
+{% for item in object_list %}
+<div class='container'>
+  <div class="alert alert-info" role="alert">
+    <p>タイトル:{{ item.title }}</p>
+    <p>投稿者:{{ item.author }}</p>
+    <p><img src='{{ item.pic.url }}' width=300></p>
+    <a href="{% url 'tweetapp:detail'　pk=item.id %}" class="btn btn-primary " role="button" aria-pressed="true">詳細</a>
+    {% if item.author == user.username %}
+      <a href="{% url 'tweetapp:update' pk=item.id %}" class="btn btn-success " role="button" aria-pressed="true">編集</a>
+      <a href="{% url 'tweetapp:delete' pk=item.id %}" class="btn btn-danger " role="button" aria-pressed="true">削除</a>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endblock content %}
